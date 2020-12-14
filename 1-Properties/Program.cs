@@ -41,13 +41,13 @@ namespace Properties
         {
             DeckFactory df = new DeckFactory();
 
-            df.SetNames(Enum.GetNames(typeof(ItalianNames)).ToList());
-            df.SetSeeds(Enum.GetNames(typeof(ItalianSeeds)).ToList());
+            df.Names = Enum.GetNames(typeof(ItalianNames));
+            df.Seeds = Enum.GetNames(typeof(ItalianSeeds));
 
             // TODO understand string format convention
-            Console.WriteLine("The {1} deck has {0} cards: ", df.GetDeckSize(), "italian");
+            Console.WriteLine("The {1} deck has {0} cards: ", df.DeckSize, "italian");
 
-            foreach (Card c in df.GetDeck())
+            foreach (Card c in df.Deck)
             {
                 Console.WriteLine(c);
             }
