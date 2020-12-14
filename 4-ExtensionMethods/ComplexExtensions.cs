@@ -15,7 +15,7 @@ namespace ExtensionMethods
         /// <returns>the sum.</returns>
         public static IComplex Add(this IComplex c1, IComplex c2)
         {
-            throw new NotImplementedException();
+            return new Complex(c1.Real + c2.Real, c1.Imaginary + c2.Imaginary);
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace ExtensionMethods
         /// <returns>the difference.</returns>
         public static IComplex Subtract(this IComplex c1, IComplex c2)
         {
-            throw new NotImplementedException();
+            return new Complex(c1.Real - c2.Real, c1.Imaginary - c2.Imaginary);
         }
 
         /// <summary>
@@ -37,7 +37,12 @@ namespace ExtensionMethods
         /// <returns>the product.</returns>
         public static IComplex Multiply(this IComplex c1, IComplex c2)
         {
-            throw new NotImplementedException();
+            double a = c1.Real;
+            double b = c1.Imaginary;
+            double c = c2.Real;
+            double d = c2.Imaginary;
+
+            return new Complex(a * c - b * d, a * d + b * c);
         }
 
         /// <summary>
@@ -48,7 +53,13 @@ namespace ExtensionMethods
         /// <returns>the quotient.</returns>
         public static IComplex Divide(this IComplex c1, IComplex c2)
         {
-            throw new NotImplementedException();
+            double a = c1.Real;
+            double b = c1.Imaginary;
+            double c = c2.Real;
+            double d = c2.Imaginary;
+            double den = c * c + d * d;
+
+            return new Complex((a * c + b * d) / den, (b * c - a * d) / den);
         }
 
         /// <summary>
@@ -64,7 +75,7 @@ namespace ExtensionMethods
         /// <returns>the complex conjugate.</returns>
         public static IComplex Conjugate(this IComplex c1)
         {
-            throw new NotImplementedException();
+            return new Complex(c1.Real, -c1.Imaginary);
         }
 
         /// <summary>
@@ -80,7 +91,8 @@ namespace ExtensionMethods
         /// <returns>the complex reciprocal.</returns>
         public static IComplex Reciprocal(this IComplex c1)
         {
-            throw new NotImplementedException();
+            double den = c1.Real * c1.Real + c1.Imaginary * c1.Imaginary;
+            return new Complex(c1.Real / den, -c1.Imaginary / den);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace ExtensionMethods
         {
             get
             {
-                throw new System.NotImplementedException();
+                return this.re;
             }
         }
 
@@ -33,7 +33,7 @@ namespace ExtensionMethods
         {
             get
             {
-                throw new System.NotImplementedException();
+                return this.im;
             }
         }
 
@@ -42,7 +42,7 @@ namespace ExtensionMethods
         {
             get
             {
-                throw new System.NotImplementedException();
+                return Math.Sqrt(re * re + im + im);
             }
         }
 
@@ -65,14 +65,14 @@ namespace ExtensionMethods
         /// <inheritdoc cref="IEquatable{T}.Equals(T)"/>
         public bool Equals(IComplex other)
         {
-            throw new System.NotImplementedException();
+            return other.Real == this.re && other.Imaginary == this.im;
         }
 
         /// <inheritdoc cref="object.Equals(object?)"/>
         public override bool Equals(object obj)
         {
-            // TODO improve
-            return base.Equals(obj);
+            Complex o = (Complex) obj;
+            return o.Real == this.re && o.Imaginary == this.im;
         }
 
         /// <inheritdoc cref="object.GetHashCode"/>
