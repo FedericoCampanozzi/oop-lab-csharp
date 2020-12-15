@@ -23,7 +23,8 @@ namespace Iterators
                 }
             }
 
-            // TODO rewrite using methods from Java8StreamOperations
+            Console.WriteLine("\nUsing C# methods\n");
+
             IDictionary<int, int> occurrences = numbers
                 .Select(optN => {
                     Console.Write(optN.ToString() + ",");
@@ -52,6 +53,65 @@ namespace Iterators
             {
                 Console.WriteLine(kv);
             }
+
+            Console.WriteLine("\nUsing methods from Java8StreamOperations\n");
+
+            IDictionary<int, int> occurrences2 = numbers
+                .Map(optN =>
+                {
+                    Console.Write(optN.ToString() + ",");
+                    return optN;
+                })
+                .SkipSome(1)
+                .TakeSome(len - 2)
+                .Filter(optN => optN.HasValue)
+                .Map(optN => optN.Value)
+                .Reduce(new Dictionary<int, int>(), (d, n) =>
+                {
+                    if (!d.ContainsKey(n))
+                    {
+                        d[n] = 1;
+                    }
+                    else
+                    {
+                        d[n]++;
+                    }
+
+                    return d;
+                });
+
+            Console.WriteLine();
+
+            foreach (KeyValuePair<int, int> kv in occurrences2)
+            {
+                Console.WriteLine(kv);
+            }
+
+            Console.WriteLine("\nUsing methods from Java8StreamOperations v2\n");
+
+            numbers.Map(optN =>
+            {
+                Console.Write(optN.ToString() + ",");
+                return optN;
+            })
+                .SkipSome(1)
+                .TakeSome(len - 2)
+                .Filter(optN => { return optN.HasValue; })
+                .Map(optN => optN.Value)
+                .Reduce(new Dictionary<int, int>(), (d, n) =>
+                {
+                    if (!d.ContainsKey(n))
+                    {
+                        d[n] = 1;
+                    }
+                    else
+                    {
+                        d[n]++;
+                    }
+
+                    return d;
+                })
+                .ForEach(itm => Console.WriteLine(itm));
         }
     }
 }
