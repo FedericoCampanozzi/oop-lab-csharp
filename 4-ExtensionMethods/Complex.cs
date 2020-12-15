@@ -51,14 +51,13 @@ namespace ExtensionMethods
         {
             get
             {
-                throw new System.NotImplementedException();
+                return Math.Atan2(re , im);
             }
         }
 
         /// <inheritdoc cref="IComplex.ToString"/>
         public override string ToString()
         {
-            // TODO improve
             return base.ToString();
         }
 
@@ -78,7 +77,6 @@ namespace ExtensionMethods
         /// <inheritdoc cref="object.GetHashCode"/>
         public override int GetHashCode()
         {
-            // TODO improve
             return base.GetHashCode();
         }
     }
