@@ -38,7 +38,7 @@ namespace OperatorsOverloading
         /// <returns>a new list with the given elements.</returns>
         public static implicit operator List<TValue>(TValue[] enumerable)
         {
-            throw new NotImplementedException();
+            return List.From<TValue>(enumerable);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace OperatorsOverloading
         /// <returns>a new list with only the given element.</returns>
         public static implicit operator List<TValue>(TValue element)
         {
-            throw new NotImplementedException();
+            return List.From<TValue>(element);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace OperatorsOverloading
         /// <returns>an array containing the elements of the list.</returns>
         public static explicit operator TValue[](List<TValue> list)
         {
-            throw new NotImplementedException();
+            return list.ToFlat().ToArray();
         }
 
         /// <summary>
@@ -72,7 +72,14 @@ namespace OperatorsOverloading
         /// </returns>
         public static bool operator ==(List<TValue> list1, List<TValue> list2)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < list1.Length; i++)
+            {
+                if (list1.Tail != list2.Tail)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         /// <summary>
@@ -85,7 +92,14 @@ namespace OperatorsOverloading
         /// </returns>
         public static bool operator !=(List<TValue> list1, List<TValue> list2)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < list1.Length; i++)
+            {
+                if (list1.Tail == list2.Tail)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         /// <summary>
@@ -100,7 +114,7 @@ namespace OperatorsOverloading
         /// </returns>
         public static bool operator >=(List<TValue> list1, List<TValue> list2)
         {
-            throw new NotImplementedException();
+            return list1.Length >= list2.Length;
         }
 
         /// <summary>
@@ -115,7 +129,7 @@ namespace OperatorsOverloading
         /// </returns>
         public static bool operator <=(List<TValue> list1, List<TValue> list2)
         {
-            throw new NotImplementedException();
+            return list1.Length <= list2.Length;
         }
 
         /// <summary>
@@ -128,7 +142,7 @@ namespace OperatorsOverloading
         /// </returns>
         public static bool operator <(List<TValue> list1, List<TValue> list2)
         {
-            throw new NotImplementedException();
+            return list1.Length < list2.Length;
         }
 
         /// <summary>
@@ -141,7 +155,7 @@ namespace OperatorsOverloading
         /// </returns>
         public static bool operator >(List<TValue> list1, List<TValue> list2)
         {
-            throw new NotImplementedException();
+            return list1.Length > list2.Length;
         }
 
         /// <summary>
@@ -152,7 +166,7 @@ namespace OperatorsOverloading
         /// <returns>the result list.</returns>
         public static List<TValue> operator +(List<TValue> list1, List<TValue> list2)
         {
-            throw new NotImplementedException();
+            return List.Append<TValue>(list1, list2);
         }
 
         /// <summary>
@@ -164,7 +178,29 @@ namespace OperatorsOverloading
         /// <returns>the result list.</returns>
         public static List<TValue> operator -(List<TValue> list1, List<TValue> list2)
         {
-            throw new NotImplementedException();
+            List<TValue> list = List.Nil<TValue>();
+            bool add = true;
+            list1 = List.Reverse<TValue>(list1);
+
+            foreach (var elem in list1.ToFlat())
+            {
+                add = true;
+                foreach(var filter in list2.ToFlat())
+                {
+                    if (elem.Equals(filter))
+                    {
+                        add = false;
+                        break;
+                    }
+                }
+
+                if (add)
+                {
+                    list = List.Of(elem, list);
+                }
+            }
+
+            return list;
         }
 
         /// <summary>
@@ -327,6 +363,11 @@ namespace OperatorsOverloading
             }
 
             return curr;
+        }
+
+        public static List<TItem> Reverse<TItem>(List<TItem> list)
+        {
+            return List.From<TItem>(list.ToFlat().Reverse());
         }
     }
 }

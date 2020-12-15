@@ -40,12 +40,12 @@ namespace OperatorsOverloading
             // Look at this assignment!
             // It is possible because of the implicit conversion operator implemented in list
             lst3 -= 5;
-
+            
             if (lst3.Tail.Tail != res2)
             {
                 throw new Exception("Wrong implementation");
             }
-
+            
             if (lst3 <= lst1)
             {
                 throw new Exception("Wrong implementation");
